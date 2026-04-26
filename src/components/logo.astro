@@ -1,0 +1,60 @@
+---
+const {
+    href = "/",
+    img = "/favicon.svg",
+    alt = "Cervid Logo",
+    width = 45,
+    height = 45,
+    ext = "", 
+} = Astro.props;
+---
+
+<a href={href} class="nav-logo">
+    <img src={img} alt={alt} class="logo-img" width={width} height={height} />
+
+    <div class="logo-name">
+        <span class="logo-text-cerv">CERV</span>
+        <span class="logo-text-id">ID</span>
+        {ext && <span class="logo-ext">{ext}</span>}
+    </div>
+</a>
+
+<style>
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.logo-img {
+    display: block;
+    object-fit: contain;
+}
+
+.logo-name {
+    display: flex;
+    align-items: baseline;
+}
+
+.logo-text-cerv {
+    color: var(--text-pure, #ffffff);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.logo-text-id {
+    color: var(--accent, #79c0ff);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.logo-ext {
+    color: var(--text-dim, #8b949e);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 6px;
+}
+</style>

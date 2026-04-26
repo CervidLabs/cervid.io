@@ -1,0 +1,32 @@
+---
+const items = [
+    {
+        name: "@cervid/decomposer",
+        comment: "Binary format deconstruction",
+    },
+    {
+        name: "@cervid/vision",
+        comment: "Image processing and computer vision",
+    },
+];
+---
+
+<section class="roadmap">
+    <div class="roadmap-title">> CERVID_PROJECT_MANIFESTO</div>
+
+    <div class="roadmap-list">
+        {
+            items.map((item, index) => (
+                <div class="roadmap-item">
+                    <span class="roadmap-connector">
+                        {index === items.length - 1 ? "└─" : "├─"}
+                    </span>
+
+                    <span class="roadmap-name">{item.name}</span>
+
+                    <span class="roadmap-comment">← {item.comment}</span>
+                </div>
+            ))
+        }
+    </div>
+</section>
