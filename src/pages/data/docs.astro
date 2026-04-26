@@ -1,0 +1,744 @@
+---
+import Logo from "../../components/logo.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>@Cervid/data &mdash; Documentation</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles/docs.css" />
+  </head>
+  <body>
+    <div class="bg-glow"></div>
+
+    <nav class="topnav">
+      <Logo ext=" - Docs" />
+      <div class="topnav-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          ☰
+        </button>
+        <div class="nav-sep"></div>
+      </div>
+      <div class="topnav-right">
+        <a href="https://github.com/cervidlabs/data" target="_blank">GitHub</a>
+        <a href="https://npmjs.com/package/@cervid/data" target="_blank">npm</a>
+        <span class="version-tag">v1.0.1</span>
+      </div>
+    </nav>
+
+    <div class="layout">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">Getting Started</span>
+          <div class="sidebar-link active" data-page="intro">Introduction</div>
+          <div class="sidebar-link" data-page="install">Installation</div>
+          <div class="sidebar-link" data-page="quickstart">Quickstart</div>
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">Reading Data</span>
+          <div class="sidebar-link" data-page="reading">
+            Cervid.read() <span class="stag stag-io">I/O</span>
+          </div>
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">DataFrame</span>
+          <div class="sidebar-link" data-page="dataframe">Core & Display</div>
+          <div class="sidebar-link" data-page="transform">
+            Transformation <span class="stag stag-tf">tf</span>
+          </div>
+          <div class="sidebar-link" data-page="filtering">Filtering</div>
+          <div class="sidebar-link" data-page="aggregation">
+            Aggregation <span class="stag stag-agg">agg</span>
+          </div>
+          <div class="sidebar-link" data-page="inspection">Inspection</div>
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">Export</span>
+          <div class="sidebar-link" data-page="export">
+            Export <span class="stag stag-io">I/O</span>
+          </div>
+        </div>
+        <div class="sidebar-group">
+          <span class="sidebar-group-label">Column API</span>
+          <div class="sidebar-link" data-page="column">Column & Series</div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <main class="main" is:raw>
+        <!-- PAGE: INTRO --> <div class="page active" id="page-intro"> <div
+        class="page-header"> <div class="page-eyebrow">Cervid/data</div> <h1
+        class="page-title">INTRODUCTION</h1> <p class="page-desc"> A columnar
+        data engine for Node.js. Zero dependencies. Built on SharedArrayBuffer,
+        Worker Threads, and TypedArrays. </p> </div> <div class="stat-row"> <div
+        class="stat-card"> <div class="stat-card-val">0</div> <div
+        class="stat-card-lbl">Dependencies</div> </div> <div class="stat-card">
+        <div class="stat-card-val">3.44s</div> <div class="stat-card-lbl">Load
+        7.8M rows</div> </div> <div class="stat-card"> <div
+        class="stat-card-val">SAB</div> <div
+        class="stat-card-lbl">SharedArrayBuffer</div> </div> <div
+        class="stat-card"> <div class="stat-card-val">MIT</div> <div
+        class="stat-card-lbl">License</div> </div> </div> <div
+        class="section-title">How it works</div> <div class="method"> <div
+        class="method-body"> <p class="method-desc"> Cervid-data reads your
+        entire dataset into a <code>SharedArrayBuffer</code> — one contiguous
+        block of RAM. Worker Threads receive a reference to that buffer, not a
+        copy. Each worker processes its own partition in parallel, writing
+        results back to shared memory. </p> <p class="method-desc"> Numeric
+        columns are stored as <code>Float64Array</code> views over the shared
+        buffer. This means aggregations, filters, and feature engineering
+        operate directly on raw memory — no object allocation, no garbage
+        collection pressure. </p> <div class="note note-info"> Cervid-data uses
+        only Node.js core modules: <code>fs</code>, <code>worker_threads</code>,
+        <code>os</code>, <code>path</code>. No npm install required beyond the
+        package itself. </div> </div> </div> <div class="section-title">Core
+        classes</div> <div class="method"> <div class="method-body"> <p
+        class="method-desc"> <strong style="color:
+        var(--orange)">Cervid</strong> — Static entry point. Use
+        <code>Cervid.read()</code> to load CSV or JSON files into a DataFrame.
+        </p> <p class="method-desc"> <strong style="color:
+        var(--orange)">DataFrame</strong> — The main data structure. Holds
+        columnar data and exposes all transformation, aggregation, and export
+        methods. </p> <p class="method-desc"> <strong style="color:
+        var(--orange)">Column</strong> — A linked reference to a single column
+        that enables chained arithmetic ops. </p> <p class="method-desc">
+        <strong style="color: var(--orange)">Series</strong> — The internal
+        columnar primitive. Each column inside a DataFrame is a Series backed by
+        a TypedArray. </p> </div> </div> </div> <!-- PAGE: INSTALL --> <div
+        class="page" id="page-install"> <div class="page-header"> <div
+        class="page-eyebrow">Getting Started</div> <h1
+        class="page-title">INSTALLATION</h1> <p class="page-desc"> Cervid-data
+        requires Node.js 18+ for SharedArrayBuffer and Worker Threads support.
+        </p> </div> <div class="section-title">npm</div> <span
+        class="code-label">install</span> <pre><span class="cn">npm</span> i
+        @cervid/data</pre> <div class="section-title">Import</div> <span
+        class="code-label">ESM (recommended)</span> <pre><span
+        class="kw">import</span> { Cervid } <span class="kw">from</span> <span
+        class="st">'@cervid/data'</span> <span class="kw">import</span> {
+        DataFrame } <span class="kw">from</span> <span
+        class="st">'@cervid/data'</span> <span class="kw">import</span> {
+        Series, Column } <span class="kw">from</span> <span
+        class="st">'@cervid/data'</span></pre> <div class="note note-warn">
+        Cervid-data is ESM only. Make sure your <code>package.json</code> has
+        <code>"type": "module"</code> or use <code>.mjs</code> extensions.
+        </div> <div class="section-title">Node.js version</div> <div
+        class="method"> <div class="method-body"> <p class="method-desc">
+        SharedArrayBuffer requires Node.js 16.4+ with cross-origin isolation
+        headers if used in a browser context. In Node.js (server-side), no extra
+        configuration is needed. </p> </div> </div> </div> <!-- PAGE: QUICKSTART
+        --> <div class="page" id="page-quickstart"> <div class="page-header">
+        <div class="page-eyebrow">Getting Started</div> <h1
+        class="page-title">QUICKSTART</h1> <p class="page-desc"> A complete
+        example loading, cleaning, transforming, and aggregating 7.8M rows. </p>
+        </div> <span class="code-label">complete example</span> <pre><span
+        class="kw">import</span> { Cervid } <span class="kw">from</span> <span
+        class="st">'@cervid/data'</span> // 1. Load CSV — uses SharedArrayBuffer
+        + Worker Threads const df = await Cervid.read('trips.csv')
+        console.log(df.info()) // { rowCount: 7832546, columnCount: 19,
+        memoryUsage: '...' } // 2. Select only the columns you need (frees RAM)
+        const slim = df.select([ 'fare_amount', 'tip_amount', 'trip_distance',
+        'passenger_count', 'tpep_pickup_datetime' ]) // 3. Clean — remove
+        invalid rows const clean = slim.filter( ['fare_amount', 'trip_distance',
+        'passenger_count'], (fare, dist, pax) => fare > 0 && dist > 0 && pax > 0
+        ) // 4. Feature engineering — vectorized over TypedArrays
+        clean.with_columns([ { name: 'tip_pct', inputs: ['tip_amount',
+        'fare_amount'], formula: (tip, fare) => (tip / fare) * 100 }, { name:
+        'revenue_per_mile', inputs: ['fare_amount', 'trip_distance'], formula:
+        (fare, dist) => fare / dist } ]) // 5. Extract hour from timestamp
+        clean.col('tpep_pickup_datetime').to_datetime().extract_hour(0) // 6.
+        GroupBy — best hour by tip percentage const byHour =
+        clean.groupBy('tpep_pickup_datetime_hour', { tip_pct: 'mean'
+        }).sort('tip_pct', false) byHour.show(5) // 7. Export await
+        clean.toCSV('output/clean_trips.csv')</pre> </div> <!-- PAGE: READING
+        --> <div class="page" id="page-reading"> <div class="page-header"> <div
+        class="page-eyebrow">Reading Data</div> <h1
+        class="page-title">Cervid.<span class="accent">READ()</span></h1> <p
+        class="page-desc"> Universal entry point for loading CSV and JSON files
+        into a DataFrame. </p> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span class="kw">static
+        async</span> <span class="fn">Cervid.read</span>(<span
+        class="prm">filePath</span><span class="typ">: string</span>, <span
+        class="prm">options</span><span class="typ">?: ReadOptions</span>) →
+        <span class="ret">Promise&lt;DataFrame&gt;</span> </div> <span
+        class="method-kind static">static</span> </div> <div
+        class="method-body"> <p class="method-desc"> Detects file format by
+        extension and routes to the appropriate engine. <code>.csv</code> uses
+        the Nitro engine (SharedArrayBuffer + Workers). <code>.json</code> uses
+        the JSON engine with auto flattening. </p> <table class="ptable"> <tr>
+        <th>Parameter</th> <th>Type</th> <th>Default</th> <th>Description</th>
+        </tr> <tr> <td class="pn">filePath</td> <td class="pt">string</td> <td
+        class="pv">—</td> <td class="pd">Path to the file</td> </tr> <tr> <td
+        class="pn">options.workers</td> <td class="pt">number</td> <td
+        class="pv">os.cpus().length</td> <td class="pd">Number of Worker
+        Threads</td> </tr> <tr> <td class="pn">options.indexerCapacity</td> <td
+        class="pt">number</td> <td class="pv">10_000_000</td> <td class="pd">Max
+        rows for column buffers</td> </tr> <tr> <td
+        class="pn">options.useOffsets</td> <td class="pt">boolean</td> <td
+        class="pv">true</td> <td class="pd">Store byte offsets for string
+        columns</td> </tr> <tr> <td class="pn">options.type</td> <td
+        class="pt">'csv' | 'json'</td> <td class="pv">auto</td> <td
+        class="pd">Force a specific format</td> </tr> </table> <span
+        class="code-label">examples</span> <pre><span class="kw">const</span> df
+        = <span class="kw">await</span> <span
+        class="fn">Cervid.read</span>(<span class="st">'data.csv'</span>) <span
+        class="kw">const</span> df = <span class="kw">await</span> <span
+        class="fn">Cervid.read</span>(<span class="st">'data.json'</span>) <span
+        class="kw">const</span> df = <span class="kw">await</span> <span
+        class="fn">Cervid.read</span>(<span class="st">'data.csv'</span>, {
+        workers: <span class="nu">4</span> })</pre> <div class="note note-info">
+        The CSV engine reads the entire file into a single SharedArrayBuffer,
+        then each Worker Thread receives a reference — not a copy. No data is
+        duplicated in RAM. </div> </div> </div> <div class="section-title">JSON
+        Engine</div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="kw">static async</span> <span
+        class="fn">Cervid._readJSON</span>(<span
+        class="prm">filePath</span><span class="typ">: string</span>) → <span
+        class="ret">Promise&lt;DataFrame&gt;</span> </div> <span
+        class="method-kind static">static</span> </div> <div
+        class="method-body"> <p class="method-desc"> Automatically detects the
+        root array (e.g. <code>"prizes"</code> in Nobel dataset). Recursively
+        flattens nested objects into columns. Expands nested arrays into
+        multiple rows, inheriting parent fields. </p> <span
+        class="code-label">nested json example</span> <pre><span class="cm">//
+        Input: { prizes: [{ year: "2023", laureates: [{id,name}] }] }</span>
+        const df = await Cervid.read('nobel.json') // Each laureate becomes its
+        own row, with year inherited // Columns: year, laureates_id,
+        laureates_firstname, ...</pre> </div> </div> </div> <!-- PAGE: DATAFRAME
+        --> <div class="page" id="page-dataframe"> <div class="page-header">
+        <div class="page-eyebrow">DataFrame</div> <h1 class="page-title">CORE
+        &amp; <span class="accent">DISPLAY</span></h1> <p class="page-desc">
+        DataFrame constructor, static builders, and display methods. </p> </div>
+        <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="kw">new</span> <span
+        class="fn">DataFrame</span>(<span class="prm">config</span><span
+        class="typ">: DataFrameConfig</span>) </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Creates a new DataFrame. You typically get
+        DataFrames from <code>Cervid.read()</code>, but you can construct one
+        manually. </p> <table class="ptable"> <tr> <th>Property</th>
+        <th>Type</th> <th>Description</th> </tr> <tr> <td
+        class="pn">columns</td> <td class="pt">Record&lt;string,
+        TypedArray&gt;</td> <td class="pd">Column data — use Float64Array for
+        numerics</td> </tr> <tr> <td class="pn">rowCount</td> <td
+        class="pt">number</td> <td class="pd">Total number of rows</td> </tr>
+        <tr> <td class="pn">headers</td> <td class="pt">string[]</td> <td
+        class="pd">Column names in order</td> </tr> </table> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="kw">static</span> <span
+        class="fn">DataFrame.fromObjects</span>(<span
+        class="prm">data</span><span class="typ">: object[]</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        static">static</span> </div> <div class="method-body"> <p
+        class="method-desc"> Converts a plain JS array of objects into a
+        DataFrame. Numeric values are stored as <code>Float64Array</code>
+        automatically. </p> <span class="code-label">example</span> <pre><span
+        class="kw">const</span> df = <span
+        class="fn">DataFrame.fromObjects</span>([ { name: <span
+        class="st">'Alice'</span>, score: <span class="nu">95</span> }, { name:
+        <span class="st">'Bob'</span>, score: <span class="nu">82</span> },
+        ])</pre> </div> </div> <div class="method"> <div class="method-header">
+        <div class="method-sig"> <span class="kw">static</span> <span
+        class="fn">DataFrame.fromArray</span>(<span class="prm">data</span><span
+        class="typ">: Record&lt;string, number&gt;[]</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        static">static</span> </div> <div class="method-body"> <p
+        class="method-desc"> Constructs a DataFrame directly from an array of
+        numeric objects, initializing <code>SharedArrayBuffers</code>
+        automatically. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="kw">static</span> <span
+        class="fn">DataFrame.fromShared</span>(<span class="prm">def</span><span
+        class="typ">: SharedDef</span>) &rarr; <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        static">static</span> </div> <div class="method-body"> <p
+        class="method-desc"> Constructs a DataFrame from a
+        <code>SharedDef</code> object, instantiating <code>TypedArray</code>
+        views directly over a <code>SharedArrayBuffer</code> without copying
+        memory. Used internally by the Worker Threads engine. </p> </div> </div>
+        <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">assign</span>(<span
+        class="prm">data</span><span class="typ">: Record&lt;string,
+        ColumnData&gt; | DataFrame</span>) → <span class="ret">this</span>
+        </div> <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Assigns new columns or
+        overwrites existing ones. Accepts an object of columns or another
+        DataFrame. Mutates in-place. Throws error if row counts mismatch. </p>
+        </div> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">getCol</span>(<span
+        class="prm">name</span><span class="typ">: string</span>) → <span
+        class="ret">ColumnData | null</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Returns the underlying raw <code>TypedArray</code>
+        or array data for a given column name. </p> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="fn">show</span>(<span class="prm">n</span><span
+        class="typ">?: number = 5</span>) → <span class="ret">void</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Prints the first
+        <code>n</code> rows as a <code>console.table</code>. String values
+        longer than 20 characters are truncated with <code>...</code>. </p>
+        </div> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">info</span>() → <span
+        class="ret">DataFrameInfo</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Returns a summary with row count, column count,
+        column names, and estimated memory usage. </p> <span
+        class="code-label">example</span> <pre><span class="kw">const</span>
+        info = df.<span class="fn">info</span>() // { rowCount: 7832546,
+        columnCount: 19, columns: [...], memoryUsage: '1139.45 MB' }</pre>
+        </div> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">describe</span>() → <span
+        class="ret">void</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Prints descriptive statistics for all numeric
+        columns: count, mean, min, 25%, 50%, 75%, max. Non-numeric columns are
+        skipped. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">stats</span>(<span class="prm">colName</span><span
+        class="typ">: string</span>) → <span class="ret">object | null</span>
+        </div> <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns a quick statistical
+        summary of a single numeric column: count, sum, mean, min, and max. </p>
+        </div> </div> </div> <!-- PAGE: TRANSFORM --> <div class="page"
+        id="page-transform"> <div class="page-header"> <div
+        class="page-eyebrow">DataFrame</div> <h1 class="page-title">TRANS<span
+        class="accent">FORMATION</span></h1> <p class="page-desc"> Methods for
+        creating new columns, selecting, renaming, casting, and reshaping data.
+        </p> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">with_columns</span>(<span
+        class="prm">specs</span><span class="typ">: ColSpec[]</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Vectorized feature engineering. Applies formulas
+        row-by-row using direct TypedArray access. Optimized fast paths for 1,
+        2, and 4 inputs. Returns <code>this</code> for chaining. </p> <table
+        class="ptable"> <tr> <th>ColSpec property</th> <th>Type</th>
+        <th>Description</th> </tr> <tr> <td class="pn">name</td> <td
+        class="pt">string</td> <td class="pd">Name of the new column to
+        create</td> </tr> <tr> <td class="pn">inputs</td> <td
+        class="pt">string[]</td> <td class="pd">Column names fed into the
+        formula</td> </tr> <tr> <td class="pn">formula</td> <td
+        class="pt">Function</td> <td class="pd"><code>(...values: number[]) =>
+        number</code></td> </tr> </table> <span
+        class="code-label">example</span> <pre>df.<span
+        class="fn">with_columns</span>([ { name: <span
+        class="st">'revenue_per_mile'</span>, inputs: [<span
+        class="st">'total_amount'</span>, <span
+        class="st">'trip_distance'</span>], formula: (amount, dist) => dist > 0
+        ? amount / dist : 0 }, { name: <span class="st">'speed_mph'</span>,
+        inputs: [<span class="st">'trip_distance'</span>, <span
+        class="st">'duration_hours'</span>], formula: (dist, dur) => dur > 0 ?
+        dist / dur : 0 } ])</pre> <div class="note note-tip"> with_columns
+        mutates in-place and returns <code>this</code>. New columns are stored
+        as Float64Array. </div> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">select</span>(<span class="prm">columnNames</span><span
+        class="typ">: string[]</span>) → <span class="ret">DataFrame</span>
+        </div> <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns a new DataFrame
+        with only the specified columns. Essential for freeing RAM — drop unused
+        columns as early as possible. </p> <pre><span class="kw">const</span>
+        slim = df.<span class="fn">select</span>([<span
+        class="st">'fare_amount'</span>, <span class="st">'tip_amount'</span>,
+        <span class="st">'trip_distance'</span>])</pre> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="fn">rename</span>(<span class="prm">mapping</span><span
+        class="typ">: Record&lt;string, string&gt;</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Renames columns without copying data. Returns a new
+        DataFrame with updated headers. </p> <pre><span class="kw">const</span>
+        df2 = df.<span class="fn">rename</span>({ tpep_pickup_datetime: <span
+        class="st">'pickup'</span>, PULocationID: <span class="st">'zone'</span>
+        })</pre> </div> </div> <div class="method"> <div class="method-header">
+        <div class="method-sig"> <span class="fn">cast</span>(<span
+        class="prm">columnName</span><span class="typ">: string</span>, <span
+        class="prm">type</span><span class="typ">: 'float' | 'int' |
+        'string'</span>) → <span class="ret">DataFrame</span> </div> <span
+        class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Forces a type conversion on
+        a column. <code>'float'</code> and <code>'int'</code> both produce
+        Float64Array. <code>'string'</code> produces a regular JS Array. Mutates
+        in-place. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">cumsum</span>(<span class="prm">columnName</span><span
+        class="typ">: string</span>) → <span class="ret">DataFrame</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Computes a running
+        cumulative sum over a column. Creates a new column named
+        <code>{columnName}_cumsum</code>. Mutates in-place. </p> </div> </div>
+        <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">with_label</span>(<span
+        class="prm">specs</span><span class="typ">: LabelSpec[]</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Applies a <code>StringIndexer</code> to encode a
+        string column as numeric IDs. Creates a new column named
+        <code>{input}_indexed</code> and stores the indexer in
+        <code>metadata.indexers</code> for later decoding. </p> </div> </div>
+        </div> <!-- PAGE: FILTERING --> <div class="page" id="page-filtering">
+        <div class="page-header"> <div class="page-eyebrow">DataFrame</div> <h1
+        class="page-title">FILTER<span class="accent">ING</span></h1> <p
+        class="page-desc"> Methods for selecting subsets of rows based on
+        conditions, position, or null values. </p> </div> <div class="method">
+        <div class="method-header"> <div class="method-sig"> <span
+        class="fn">filter</span>(<span class="prm">inputs</span><span
+        class="typ">: string[]</span>, <span class="prm">predicate</span><span
+        class="typ">: Function</span>) → <span class="ret">DataFrame</span>
+        </div> <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns a new DataFrame
+        containing only rows where the predicate returns <code>true</code>. The
+        predicate receives the values of the listed columns for each row. </p>
+        <span class="code-label">example</span> <pre><span
+        class="kw">const</span> valid = df.<span class="fn">filter</span>(
+        [<span class="st">'fare_amount'</span>, <span
+        class="st">'trip_distance'</span>, <span
+        class="st">'passenger_count'</span>], (fare, dist, pax) => fare > 0 &&
+        dist > 0 && pax > 0 )</pre> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">head</span>(<span class="prm">n</span><span class="typ">?:
+        number = 5</span>) → <span class="ret">DataFrame</span> </div> <span
+        class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns a new DataFrame
+        with the first <code>n</code> rows. </p> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="fn">tail</span>(<span class="prm">n</span><span
+        class="typ">?: number = 5</span>) → <span class="ret">DataFrame</span>
+        </div> <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns a new DataFrame
+        with the last <code>n</code> rows. </p> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="fn">dropNA</span>(<span class="prm">options</span><span
+        class="typ">?: { how?: 'any' | 'all' }</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Removes rows containing <code>null</code>,
+        <code>undefined</code>, or <code>NaN</code>. <code>how: 'any'</code>
+        drops the row if any column has a null. <code>how: 'all'</code> drops
+        only if all columns are null. </p> </div> </div> <div class="method">
+        <div class="method-header"> <div class="method-sig"> <span
+        class="fn">fillna</span>(<span class="prm">value</span><span
+        class="typ">: number | string</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Replaces all null, undefined, or NaN values in all
+        columns with the specified value. Mutates in-place. </p> </div> </div>
+        <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">str_contains</span>(<span
+        class="prm">columnName</span><span class="typ">: string</span>, <span
+        class="prm">pattern</span><span class="typ">: string</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Filters rows where the string column matches the
+        regex pattern. Case-insensitive. </p> <span
+        class="code-label">example</span> <pre><span class="kw">const</span>
+        result = df.<span class="fn">str_contains</span>(<span
+        class="st">'product_name'</span>, <span
+        class="st">'wireless'</span>)</pre> </div> </div> </div> <!-- PAGE:
+        AGGREGATION --> <div class="page" id="page-aggregation"> <div
+        class="page-header"> <div class="page-eyebrow">DataFrame</div> <h1
+        class="page-title">AGGRE<span class="accent">GATION</span></h1> <p
+        class="page-desc"> GroupBy, sorting, and scalar aggregation methods.
+        </p> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">groupBy</span>(<span
+        class="prm">groupCol</span><span class="typ">: string</span>, <span
+        class="prm">aggs</span><span class="typ">: AggSpec</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Groups rows by a column and applies aggregation
+        functions. Supports <code>sum</code>, <code>mean</code>,
+        <code>count</code>, <code>max</code>, <code>min</code>. Pass a string
+        for a single op or an array for multiple — output columns will be named
+        <code>{col}_{op}</code>. </p> <span class="code-label">single op</span>
+        <pre><span class="kw">const</span> byHour = df.<span
+        class="fn">groupBy</span>(<span class="st">'hour'</span>, { tip_pct:
+        <span class="st">'mean'</span>, fare_amount: <span
+        class="st">'sum'</span> })</pre> <span class="code-label">multiple
+        ops</span> <pre><span class="kw">const</span> byZone = df.<span
+        class="fn">groupBy</span>(<span class="st">'zone_id'</span>, {
+        fare_amount: [<span class="st">'sum'</span>, <span
+        class="st">'mean'</span>, <span class="st">'count'</span>], tip_amount:
+        [<span class="st">'sum'</span>, <span class="st">'max'</span>] }) //
+        Columns: fare_amount_sum, fare_amount_mean, fare_amount_count, ...</pre>
+        </div> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">groupByCategory</span>(<span
+        class="prm">groupCol</span><span class="typ">: string</span>, <span
+        class="prm">valueCol</span><span class="typ">: string</span>) → <span
+        class="ret">Map&lt;string | number, GroupAccumulator&gt;</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> O(n) aggregation using a
+        JavaScript <code>Map</code>. Ideal for unbounded or string categories.
+        Returns a Map with <code>sum</code> and <code>count</code>. </p> </div>
+        </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">groupByRange</span>(<span
+        class="prm">colName</span><span class="typ">: string</span>, <span
+        class="prm">targetCol</span><span class="typ">: string</span>, <span
+        class="prm">maxRange</span><span class="typ">: number</span>) → <span
+        class="ret">Result[]</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> O(n) groupBy for bounded integer keys. Uses
+        <code>Uint32Array</code> as a direct lookup — no Map, no hashing, no
+        allocations. Returns array of <code>{ group, avg }</code> sorted
+        descending. </p> <div class="note note-tip"> This is the fastest
+        aggregation in Cervid-data. Use it when group keys are bounded integers
+        (e.g. zone IDs, hour 0–23). </div> </div> </div> <div class="method">
+        <div class="method-header"> <div class="method-sig"> <span
+        class="fn">groupByID</span>(<span class="prm">colName</span><span
+        class="typ">: string</span>, <span class="prm">targetCol</span><span
+        class="typ">: string</span>) → <span class="ret">Result[]</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Alias for
+        <code>groupByRange(colName, targetCol, 300)</code>. Preset for NYC Taxi
+        zone IDs. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">sort</span>(<span class="prm">columnName</span><span
+        class="typ">: string</span>, <span class="prm">ascending</span><span
+        class="typ">?: boolean = true</span>) → <span
+        class="ret">DataFrame</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Index sort — builds an index array, sorts by target
+        column values, then reorders all columns in one pass. Returns a new
+        DataFrame. </p> <span class="code-label">example — top 10 most
+        profitable trips</span> <pre><span class="kw">const</span> top10 =
+        df.<span class="fn">sort</span>(<span
+        class="st">'revenue_per_mile'</span>, <span
+        class="nu">false</span>).<span class="fn">head</span>(<span
+        class="nu">10</span>)</pre> </div> </div> <div
+        class="section-title">Scalar Aggregations</div> <div class="method">
+        <div class="method-body"> <table class="ptable"> <tr> <th>Method</th>
+        <th>Returns</th> <th>Description</th> </tr> <tr> <td
+        class="pn">sum(col)</td> <td class="pt">number</td> <td class="pd">Sum
+        of all values in a column</td> </tr> <tr> <td class="pn">mean(col)</td>
+        <td class="pt">number</td> <td class="pd">Arithmetic mean — returns 0 if
+        rowCount is 0</td> </tr> <tr> <td class="pn">max(col)</td> <td
+        class="pt">number</td> <td class="pd">Maximum value</td> </tr> <tr> <td
+        class="pn">min(col)</td> <td class="pt">number</td> <td
+        class="pd">Minimum value</td> </tr> </table> <span
+        class="code-label">example</span> <pre>df.<span
+        class="fn">sum</span>(<span class="st">'fare_amount'</span>) //
+        48291043.21 df.<span class="fn">mean</span>(<span
+        class="st">'tip_pct'</span>) // 14.82 df.<span
+        class="fn">max</span>(<span class="st">'trip_distance'</span>) //
+        189.4</pre> </div> </div> </div> <!-- PAGE: INSPECTION --> <div
+        class="page" id="page-inspection"> <div class="page-header"> <div
+        class="page-eyebrow">DataFrame</div> <h1 class="page-title">INSPEC<span
+        class="accent">TION</span></h1> <p class="page-desc"> Methods for
+        exploring unique values, frequencies, and joining DataFrames. </p>
+        </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">unique</span>(<span
+        class="prm">columnName</span><span class="typ">: string</span>) → <span
+        class="ret">any[]</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Returns an array of unique values in a column using
+        a <code>Set</code>. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">nunique</span>(<span class="prm">columnName</span><span
+        class="typ">: string</span>) → <span class="ret">number</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Returns the count of unique
+        values. Faster than <code>unique().length</code>. </p> </div> </div>
+        <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">value_counts</span>(<span
+        class="prm">columnName</span><span class="typ">: string</span>) → <span
+        class="ret">{ value, count }[]</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Returns a frequency table sorted from most to least
+        common. </p> <span class="code-label">example</span> <pre><span
+        class="kw">const</span> freq = df.<span
+        class="fn">value_counts</span>(<span class="st">'payment_type'</span>)
+        // [{ value: 1, count: 5821034 }, { value: 2, count: 1823456 }]</pre>
+        </div> </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">join</span>(<span
+        class="prm">other</span><span class="typ">: DataFrame</span>, <span
+        class="prm">on</span><span class="typ">: string</span>, <span
+        class="prm">how</span><span class="typ">?: 'inner' | 'left' =
+        'inner'</span>) → <span class="ret">DataFrame</span> </div> <span
+        class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Hash join on a common
+        column. <code>inner</code> returns only matching rows. <code>left</code>
+        keeps all left rows, filling unmatched right columns with
+        <code>null</code>. </p> <span class="code-label">example</span>
+        <pre><span class="kw">const</span> enriched = trips.<span
+        class="fn">join</span>(zones, <span class="st">'zone_id'</span>, <span
+        class="st">'left'</span>)</pre> </div> </div> </div> <!-- PAGE: EXPORT
+        --> <div class="page" id="page-export"> <div class="page-header"> <div
+        class="page-eyebrow">Export</div> <h1 class="page-title">EXPORT</h1> <p
+        class="page-desc"> Write DataFrames to disk in CSV, JSON, TXT, or plain
+        JS arrays. </p> </div> <div class="method"> <div class="method-header">
+        <div class="method-sig"> <span class="fn">write</span>(<span
+        class="prm">filePath</span><span class="typ">: string</span>) → <span
+        class="ret">Promise&lt;void&gt;</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Streaming write export for DataFrames directly to
+        disk as CSV. </p> </div> </div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="fn">toCSV</span>(<span class="prm">outputPath</span><span
+        class="typ">: string</span>, <span class="prm">options</span><span
+        class="typ">?: object</span>) → <span
+        class="ret">Promise&lt;void&gt;</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Exports the DataFrame to a CSV file via streaming
+        write. Floats are written with 4 decimal places. Validates the
+        <code>.csv</code> extension. </p> <span
+        class="code-label">example</span> <pre><span class="kw">await</span>
+        df.<span class="fn">toCSV</span>(<span
+        class="st">'output/results.csv'</span>)</pre> </div> </div> <div
+        class="method"> <div class="method-header"> <div class="method-sig">
+        <span class="fn">toJSON</span>(<span class="prm">outputPath</span><span
+        class="typ">: string</span>) → <span
+        class="ret">Promise&lt;void&gt;</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Exports to a JSON file. Validates
+        <code>.json</code> extension. </p> </div> </div> <div class="method">
+        <div class="method-header"> <div class="method-sig"> <span
+        class="fn">toTXT</span>(<span class="prm">outputPath</span><span
+        class="typ">: string</span>) → <span
+        class="ret">Promise&lt;void&gt;</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Exports to a plain text file. Validates
+        <code>.txt</code> extension. </p> </div> </div> <div class="method">
+        <div class="method-header"> <div class="method-sig"> <span
+        class="fn">toArray</span>() → <span class="ret">object[]</span> </div>
+        <span class="method-kind instance">instance</span> </div> <div
+        class="method-body"> <p class="method-desc"> Converts the DataFrame back
+        to a plain JS array of row objects. Useful for interoperability. </p>
+        </div> </div> <div class="note note-warn"> All export methods validate
+        the file extension and throw if it doesn't match. Pass the path with the
+        extension explicitly. </div> </div> <!-- PAGE: COLUMN --> <div
+        class="page" id="page-column"> <div class="page-header"> <div
+        class="page-eyebrow">Column API</div> <h1 class="page-title">COLUMN
+        &amp; <span class="accent">SERIES</span></h1> <p class="page-desc">
+        Low-level column operations and the internal Series primitive. </p>
+        </div> <div class="method"> <div class="method-header"> <div
+        class="method-sig"> <span class="fn">col</span>(<span
+        class="prm">name</span><span class="typ">: string</span>) → <span
+        class="ret">Column</span> </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> Returns a <code>Column</code> instance linked to
+        the underlying TypedArray. Enables chained arithmetic that mutates the
+        column in-place. </p> <span class="code-label">example — timestamp
+        parsing</span> <pre>df.<span class="fn">col</span>(<span
+        class="st">'tpep_pickup_datetime'</span>) .<span
+        class="fn">to_datetime</span>() .<span
+        class="fn">extract_hour</span>(<span class="nu">0</span>) // Creates new
+        column: tpep_pickup_datetime_hour</pre> <span class="code-label">example
+        — arithmetic between columns</span> <pre>df.<span
+        class="fn">col</span>(<span class="st">'total_amount'</span>) .<span
+        class="fn">sub</span>(df.<span class="fn">col</span>(<span
+        class="st">'tip_amount'</span>)) .<span class="fn">div</span>(<span
+        class="nu">1.08</span>)</pre> </div> </div> <div
+        class="section-title">Column methods</div> <div class="method"> <div
+        class="method-body"> <table class="ptable"> <tr> <th>Method</th>
+        <th>Accepts</th> <th>Description</th> </tr> <tr> <td
+        class="pn">add(value)</td> <td class="pt">number | Column</td> <td
+        class="pd">Addition in-place</td> </tr> <tr> <td
+        class="pn">sub(value)</td> <td class="pt">number | Column</td> <td
+        class="pd">Subtraction in-place</td> </tr> <tr> <td
+        class="pn">mul(value)</td> <td class="pt">number | Column</td> <td
+        class="pd">Multiplication in-place</td> </tr> <tr> <td
+        class="pn">div(value)</td> <td class="pt">number | Column</td> <td
+        class="pd">Division in-place — guards against divide by zero</td> </tr>
+        <tr> <td class="pn">to_datetime()</td> <td class="pt">—</td> <td
+        class="pd">Converts string timestamps to ms since epoch
+        (Date.getTime)</td> </tr> <tr> <td
+        class="pn">extract_hour(offsetSeconds)</td> <td class="pt">number</td>
+        <td class="pd">Extracts hour 0–23 from ms timestamp. Creates
+        <code>{name}_hour</code> column</td> </tr> </table> </div> </div> <div
+        class="section-title">Series</div> <div class="method"> <div
+        class="method-header"> <div class="method-sig"> <span
+        class="kw">new</span> <span class="fn">Series</span>(<span
+        class="prm">name</span>, <span class="prm">data</span><span
+        class="typ">: TypedArray</span>, <span class="prm">type</span><span
+        class="typ">: string</span>, <span class="prm">indexer?</span>, <span
+        class="prm">mask?</span>) </div> <span class="method-kind
+        instance">instance</span> </div> <div class="method-body"> <p
+        class="method-desc"> The internal columnar primitive. Each column inside
+        a DataFrame is backed by a Series. Use
+        <code>Series.fromRawBuffer()</code> to reconstruct from raw buffer data.
+        The optional <code>indexer</code> enables transparent numeric-ID to
+        string translation via <code>.get(index)</code>. </p> <div class="note
+        note-warn"> Series is the internal primitive — most users work with
+        DataFrame and Column methods directly. </div> <table class="ptable">
+        <tr> <th>Method</th> <th>Returns</th> <th>Description</th> </tr> <tr>
+        <td class="pn">get(index)</td> <td class="pt">any</td> <td
+        class="pd">Value at index — decodes via indexer if present</td> </tr>
+        <tr> <td class="pn">slice(start, end)</td> <td class="pt">Series</td>
+        <td class="pd">Returns a slice preserving the indexer reference</td>
+        </tr> <tr> <td class="pn">Series.fromRawBuffer()</td> <td
+        class="pt">Series</td> <td class="pd">Static factory from raw buffer +
+        metadata</td> </tr> <tr> <td class="pn">Series.formatResults()</td> <td
+        class="pt">object</td> <td class="pd">Formats aggregation results with a
+        .show() method</td> </tr> </table> </div> </div> </div>
+      </main>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+
+      function openSidebar() {
+        sidebar?.classList.add("open");
+        overlay?.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeSidebar() {
+        sidebar?.classList.remove("open");
+        overlay?.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      if (menuToggle) menuToggle.addEventListener("click", openSidebar);
+      if (overlay) overlay.addEventListener("click", closeSidebar);
+
+      const links = document.querySelectorAll<HTMLElement>(".sidebar-link");
+      const pages = document.querySelectorAll<HTMLElement>(".page");
+
+      function showPage(pageId: string) {
+        pages.forEach((p) => p.classList.remove("active"));
+        links.forEach((l) => l.classList.remove("active"));
+        const page = document.getElementById("page-" + pageId);
+        if (page) page.classList.add("active");
+        const link = document.querySelector(`[data-page="${pageId}"]`);
+        if (link) link.classList.add("active");
+        history.replaceState(null, "", "#" + pageId);
+        window.scrollTo(0, 0);
+        if (window.innerWidth <= 860) closeSidebar();
+      }
+
+      links.forEach((link) => {
+        link.addEventListener("click", (e: Event) => {
+          e.preventDefault();
+          showPage(link.dataset.page || "");
+        });
+      });
+
+      const hash = window.location.hash.replace("#", "");
+      if (hash && document.getElementById("page-" + hash)) {
+        showPage(hash);
+      } else {
+        showPage("intro");
+      }
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 860) closeSidebar();
+      });
+    </script>
+  </body>
+</html>

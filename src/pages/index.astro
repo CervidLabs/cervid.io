@@ -1,100 +1,91 @@
+---
+import Ecosystem from "../components/ecosystem.astro";
+import Footer from "../components/footer.astro";
+import Logo from "../components/logo.astro";
+import Roadmap from "../components/roadmap.astro";
+---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cervid · Radical Infrastructure for Node.js</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/main.css">
-</head>
-<body>
-
-<nav>
-    <a href="/" class="nav-logo">
-        <svg class="logo-img" viewBox="0 0 24 24" fill="none" width="35" height="35">
-            <path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z" fill="var(--accent)"/>
-        </svg>
-        <div class="logo-name">
-            <span class="logo-text-cerv">CERV</span><span class="logo-text-id">ID</span>
-        </div>
-    </a>
-<div class="nav-right">
-    <a href="https://github.com/cervid-io" class="nav-link">GITHUB</a>
-</div>
-</nav>
-
-<header class="mother-hero">
-    <div class="hero-content">
-        <h1 class="hero-title">
-            <span class="line-1">RADICAL</span>
-            <span class="line-2">INFRASTRUCTURE</span>
-            <span class="line-3">FOR NODE.JS</span>
-        </h1>
-     <p class="hero-tagline">
-        Zero-dependency, high-performance tools designed to push JavaScript beyond its limits. Built for the next generation of data-intensive applications.
-    </p>
-    </div>
-</header>
-
-<main class="ecosystem-grid">
-    <a href="/data" class="card live">
-        <div class="card-status">v1.0.2 // LIVE</div>
-        <div class="card-body">
-            <h2 class="card-title">@cervid/data</h2>
-            <p class="card-text">Ultra-fast columnar engine. Leveraging Shared Memory and Worker Threads for native processing speed.</p>
-            <div class="card-tags">
-                <span>Columnar</span><span>SIMD</span><span>Workers</span><span>CSV</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cervid · Radical Infrastructure for Node.js</title>
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="styles/main.css" />
+    </head>
+    <body>
+        <nav>
+            <Logo />
+            <div class="nav-right">
+                <a href="https://github.com/CervidLabs" class="nav-link"
+                    >GITHUB</a
+                >
             </div>
-        </div>
-    </a>
+        </nav>
 
-    <a class="card blueprint">
-        <div class="card-status">IN CONSTRUCTION // PROTOTYPE</div>
-        <div class="card-body">
-            <h2 class="card-title">@cervid/decomposer</h2>
-            <p class="card-text">Binary format deconstruction. Pure Node.js reader for Parquet, Arrow, and Avro files.</p>
-            <div class="card-tags">
-                <span>Binary</span><span>Parquet</span><span>IPC</span>
+        <header class="mother-hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="line-1">RADICAL</span>
+                    <span class="line-2">INFRASTRUCTURE</span>
+                    <span class="line-3">FOR NODE.JS</span>
+                </h1>
+
+                <p class="hero-tagline">
+                    Zero-dependency, high-performance data infrastructure for
+                    Node.js. Built with SharedArrayBuffer, Workers and zero-copy
+                    architecture.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="#ecosystem" class="btn-primary">GET STARTED</a>
+                    <a
+                        href="https://github.com/CervidLabs"
+                        class="btn-secondary">GITHUB</a
+                    >
+                </div>
             </div>
-        </div>
-    </a>
-</main>
-
-<section class="roadmap">
-    <div class="roadmap-title">> CERVID_PROJECT_MANIFESTO</div>
-    <div class="roadmap-list">
-        <div class="roadmap-group">
-            <span class="roadmap-year">2026 Q3-Q4</span>
-            <div class="roadmap-item">
-                <span class="roadmap-connector">└─</span>
-                <span class="roadmap-name">@cervid/vision</span>
-                <span class="roadmap-comment">← image processing & computer vision</span>
+        </header>
+        <section class="philosophy">
+            <div class="philosophy-item">
+                <h3>01 // NATIVE CORE</h3>
+                <p>
+                    No native modules required. We leverage the power of modern
+                    V8 features like SharedArrayBuffers and BigInt for maximum
+                    portability.
+                </p>
             </div>
-        </div>
-    </div>
-</section>
+            <div class="philosophy-item">
+                <h3>02 // ZERO OVERHEAD</h3>
+                <p>
+                    Built for production. We focus on memory efficiency and
+                    zero-copy data operations to minimize the impact on the
+                    Garbage Collector.
+                </p>
+            </div>
+            <div class="philosophy-item">
+                <h3>03 // SCALE FIRST</h3>
+                <p>
+                    Designed to handle millions of rows in milliseconds. Every
+                    library in the Cervid family is tested against massive
+                    real-world datasets.
+                </p>
+            </div>
+        </section>
 
-<section class="philosophy">
-    <div class="philosophy-item">
-        <h3>01 // NATIVE CORE</h3>
-        <p>No native modules required. We leverage the power of modern V8 features like SharedArrayBuffers and BigInt for maximum portability.</p>
-    </div>
-    <div class="philosophy-item">
-        <h3>02 // ZERO OVERHEAD</h3>
-        <p>Built for production. We focus on memory efficiency and zero-copy data operations to minimize the impact on the Garbage Collector.</p>
-    </div>
-    <div class="philosophy-item">
-        <h3>03 // SCALE FIRST</h3>
-        <p>Designed to handle millions of rows in milliseconds. Every library in the Cervid family is tested against massive real-world datasets.</p>
-    </div>
-</section>
+        <Ecosystem />
 
-<footer>
-    <div class="footer-brand">CERVID.IO</div>
-    <div class="footer-copy">© 2026 ALBETRAN TECHNOLOGIES. POWERED BY PURE NODE.JS CORE.</div>
-</footer>
+        <Roadmap />
 
-</body>
+        <Footer />
+    </body>
 </html>

@@ -1,0 +1,57 @@
+---
+const { disabled = [] } = Astro.props;
+
+const modules = [
+    {
+        name: "@cervid/data",
+        href: "/data",
+        status: "LIVE",
+        version: "v1.0.0",
+        description:
+            "Ultra-fast columnar engine. Leveraging Shared Memory and Worker Threads.",
+        tags: ["Columnar", "SIMD", "Workers", "CSV", "JSON", "NDJSON"],
+    },
+    {
+        name: "@cervid/decomposer",
+        href: null,
+        status: "PROTOTYPE",
+        version: "IN CONSTRUCTION",
+        description: "Binary format deconstruction. Pure Node.js reader.",
+        tags: ["Binary", "Parquet", "IPC"],
+    },
+];
+---
+
+<section id="ecosystem" class="ecosystem-grid">
+    {
+        modules.map((mod) => {
+            const isDisabled = !mod.href;
+            const isCancel = disabled.includes(mod.name) || isDisabled;
+
+            const Tag = isDisabled ? "div" : "a";
+
+            return (
+                <Tag
+                    href={!isCancel ? mod.href : undefined}
+                    class={`card ${isDisabled ? "blueprint" : "live"}`}
+                >
+                    <div class="card-status">
+                        {mod.version} // {mod.status}
+                    </div>
+
+                    <div class="card-body">
+                        <h2 class="card-title">{mod.name}</h2>
+
+                        <p class="card-text">{mod.description}</p>
+
+                        <div class="card-tags">
+                            {mod.tags.map((tag) => (
+                                <span>{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                </Tag>
+            );
+        })
+    }
+</section>

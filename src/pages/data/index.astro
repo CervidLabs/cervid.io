@@ -1,0 +1,162 @@
+---
+import Ecosystem from "../../components/ecosystem.astro";
+import Footer from "../../components/footer.astro";
+import Logo from "../../components/logo.astro";
+import Roadmap from "../../components/roadmap.astro";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <title>Cervid · Radical Data Engine</title>
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/main.css" />
+    </head>
+    <body>
+        <nav>
+            <Logo />
+            <button class="mobile-menu-btn" id="openMenu">
+                <svg width="20" height="20">
+                    <path d="M3 6h14M3 10h14M3 14h14" stroke="white"></path>
+                </svg>
+            </button>
+            <div class="nav-right" id="navMenu">
+                <button class="close-menu" id="closeMenu">✕</button>
+                <a href="#benchmark" class="nav-link">BENCHMARK</a>
+                <a href="#packages" class="nav-link">PACKAGES</a>
+                <a href="/data/docs" class="nav-link">DOCS</a>
+                <a
+                    href="https://github.com/CervidLabs/data"
+                    target="_blank"
+                    class="nav-link">GITHUB</a
+                >
+            </div>
+        </nav>
+
+        <header class="mother-hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="line-1">DATA</span>
+                    <span class="line-2">PROCESSING</span>
+                    <span class="line-3">REIMAGINED</span>
+                </h1>
+                <p class="hero-mini">
+                    Pure Node.js · Zero Dependencies · Columnar Engine
+                </p>
+                <p class="hero-tagline">
+                    High-performance columnar data engine for Node.js.
+                    SharedArrayBuffer + Worker Threads. Built for massive
+                    datasets.
+                </p>
+
+                <div class="hero-actions">
+                    <div class="install-box">
+                        <span class="prompt">$</span> npm i @cervid/data
+                        <button class="copy-btn" onclick="copyInstall()"
+                            >COPY</button
+                        >
+                    </div>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">5.02s</div>
+                        <div class="stat-label">Load 7.8M rows</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Dependencies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">MIT</div>
+                        <div class="stat-label">License</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="divider-line"></div>
+
+        <section id="benchmark" class="section-container">
+            <div class="section-label">Performance</div>
+            <h2 class="section-title">
+                BENCHMARK<br /><span class="accent-gradient"
+                    >7,832,546 ROWS</span
+                >
+            </h2>
+
+            <div class="benchmark-grid-wrapper">
+                <div class="bench-header">
+                    <span>ENGINE</span>
+                    <span>RELATIVE TIME</span>
+                    <span style="text-align:right">TOTAL</span>
+                </div>
+                <div class="benchmark-rows">
+                    <div class="bench-row-item highlight">
+                        <div class="bench-name">@cervid/data</div>
+                        <div class="bench-bar-wrap">
+                            <div class="bench-bar" style="width: 20%;"></div>
+                        </div>
+                        <div class="bench-time">5.02s</div>
+                    </div>
+                    <div class="bench-row-item">
+                        <div class="bench-name">Polars (Py)</div>
+                        <div class="bench-bar-wrap">
+                            <div class="bench-bar" style="width: 24%;"></div>
+                        </div>
+                        <div class="bench-time">5.95s</div>
+                    </div>
+                    <div class="bench-row-item">
+                        <div class="bench-name">Pandas (Py)</div>
+                        <div class="bench-bar-wrap">
+                            <div class="bench-bar" style="width: 100%;"></div>
+                        </div>
+                        <div class="bench-time">25.80s</div>
+                    </div>
+                </div>
+            </div>
+            <p class="bench-note">
+                CSV · 7.8M rows · Feature Engineering + Filtering. Cervid uses
+                SharedArrayBuffer + Worker Threads.
+            </p>
+        </section>
+
+        <div class="divider-line" id="packages"></div>
+
+        <Ecosystem disabled={["@cervid/data"]} />
+
+        <Roadmap />
+
+        <Footer />
+
+        <script>
+            // Lógica del Menú Móvil
+            const openBtn = document.getElementById("openMenu");
+            const closeBtn = document.getElementById("closeMenu");
+            const navMenu = document.getElementById("navMenu");
+
+            openBtn?.addEventListener("click", () => {
+                navMenu?.classList.add("active");
+                document.body.style.overflow = "hidden";
+            });
+
+            closeBtn?.addEventListener("click", () => {
+                navMenu?.classList.remove("active");
+                document.body.style.overflow = "auto";
+            });
+        </script>
+    </body>
+</html>
